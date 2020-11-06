@@ -4,7 +4,11 @@
   "description": "**Read these instructions carefully. Understand exactly what is expected _before_ starting this Sprint Challenge.**",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "seed":"knex seed:run",
+    "migrate":"knex migrate:latest",
+    "create":"knex migrate:make create-table",
+    "rollback":"knex migrate:rollback"
   },
   "repository": {
     "type": "git",

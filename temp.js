@@ -18,7 +18,7 @@ exports.up = function(knex) {
         tbl.string('task', 128).notNullable()
         tbl.string('notes', 128)
         tbl.string('description').notNullable()
-        tbl.boolean('completed').notNullable().defaultTo(false)
+        tbl.boolean('completed').defaultTo(false)
         tbl.integer('project_id')
         .unsigned()
         .notNullable()
@@ -33,10 +33,29 @@ exports.up = function(knex) {
         .onDelete('CASCADE') // 'RESTRICT'
         .onUpdate('CASCADE') // 'RESTRICT'
       })
+     .createTable("proresources", (tbl) => {
+        tbl
+          .integer("resource_id")
+          .unsigned()
+          .notNullable()
+          .references("id")
+          .inTable("resources")
+          .onDelete("CASCADE") // 'RESTRICT'
+          .onUpdate("CASCADE"); // 'RESTRICT'
+        tbl
+          .integer("project_id")
+          .unsigned()
+          .notNullable()
+          .references("id")
+          .inTable("projects")
+          .onDelete("CASCADE") // 'RESTRICT'
+          .onUpdate("CASCADE"); // 'RESTRICT'
+      });
 };
 
 exports.down = function(knex) {
     return knex.schema
+    .dropTableIfExists("proresources")
     .dropTableIfExists('tasks')
     .dropTableIfExists('resources')
     .dropTableIfExists('projects')
